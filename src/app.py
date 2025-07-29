@@ -38,6 +38,45 @@ activities = {
         "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM",
         "max_participants": 30,
         "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+    },
+    # Sports activities
+    "Volleyball Team": {
+        "description": "Practice volleyball and compete in inter-school tournaments",
+        "schedule": "Tuesdays and Fridays, 4:00 PM - 5:30 PM",
+        "max_participants": 12,
+        "participants": []
+    },
+    "Swimming Club": {
+        "description": "Improve swimming skills and participate in swim meets",
+        "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 15,
+        "participants": []
+    },
+    # Artistic activities
+    "Photography Club": {
+        "description": "Learn photography techniques and showcase your work",
+        "schedule": "Wednesdays, 4:00 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": []
+    },
+    "Music Band": {
+        "description": "Join the school band and perform at events",
+        "schedule": "Mondays and Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 14,
+        "participants": []
+    },
+    # Intellectual activities
+    "Debate Team": {
+        "description": "Develop public speaking and argumentation skills",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": []
+    },
+    "Robotics Club": {
+        "description": "Build robots and compete in robotics competitions",
+        "schedule": "Fridays, 4:00 PM - 5:30 PM",
+        "max_participants": 12,
+        "participants": []
     }
 }
 
@@ -52,8 +91,13 @@ def get_activities():
     return activities
 
 
+
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
+    
+    # Validate student is not already signed up
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
     """Sign up a student for an activity"""
     # Validate activity exists
     if activity_name not in activities:
